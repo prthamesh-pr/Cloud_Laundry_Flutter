@@ -81,41 +81,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       const SizedBox(height: 8),
-                      Container(
-                        padding: const EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                          color: Colors.green.shade50,
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: Colors.green.shade200),
-                        ),
-                        child: Column(
-                          children: [
-                            Text(
-                              'API Connected',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                color: Colors.green.shade700,
-                                fontSize: 14,
-                              ),
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              'Using: https://cloud-laundry.onrender.com',
-                              style: TextStyle(
-                                color: Colors.green.shade600,
-                                fontSize: 12,
-                              ),
-                            ),
-                            Text(
-                              'Enter your credentials to login',
-                              style: TextStyle(
-                                color: Colors.green.shade600,
-                                fontSize: 13,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
                     ],
                   ),
                 ),
