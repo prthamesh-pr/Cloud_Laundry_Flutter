@@ -6,16 +6,16 @@ class ScheduleProvider with ChangeNotifier {
   List<Schedule> _schedules = [];
   bool _isLoading = false;
   String? _error;
-  
+
   List<Schedule> get schedules => _schedules;
   bool get isLoading => _isLoading;
   String? get error => _error;
-  
+
   Future<void> fetchSchedules() async {
     _isLoading = true;
     _error = null;
     notifyListeners();
-    
+
     try {
       final response = await ApiService.getSchedules();
       if (response.success) {
@@ -35,7 +35,7 @@ class ScheduleProvider with ChangeNotifier {
       notifyListeners();
     }
   }
-  
+
   Future<bool> createSchedule({
     required String serviceId,
     required DateTime scheduledDate,
@@ -46,7 +46,7 @@ class ScheduleProvider with ChangeNotifier {
     _isLoading = true;
     _error = null;
     notifyListeners();
-    
+
     try {
       final response = await ApiService.createSchedule(
         serviceId: serviceId,
@@ -55,7 +55,7 @@ class ScheduleProvider with ChangeNotifier {
         addressId: addressId,
         notes: notes,
       );
-      
+
       if (response.success) {
         _schedules.add(response.data!);
         _error = null;
@@ -74,15 +74,15 @@ class ScheduleProvider with ChangeNotifier {
       _isLoading = false;
     }
   }
-  
+
   Future<bool> cancelSchedule(String scheduleId) async {
     _isLoading = true;
     _error = null;
     notifyListeners();
-    
+
     try {
       final response = await ApiService.cancelSchedule(scheduleId);
-      
+
       if (response.success) {
         _schedules.removeWhere((schedule) => schedule.id == scheduleId);
         _error = null;
@@ -102,7 +102,7 @@ class ScheduleProvider with ChangeNotifier {
       notifyListeners();
     }
   }
-  
+
   Schedule? getScheduleById(String id) {
     try {
       return _schedules.firstWhere((schedule) => schedule.id == id);
@@ -110,7 +110,7 @@ class ScheduleProvider with ChangeNotifier {
       return null;
     }
   }
-  
+
   List<Schedule> getUpcomingSchedules() {
     final now = DateTime.now();
     return _schedules
@@ -118,7 +118,7 @@ class ScheduleProvider with ChangeNotifier {
         .toList()
       ..sort((a, b) => a.scheduledDate.compareTo(b.scheduledDate));
   }
-  
+
   List<Schedule> getPastSchedules() {
     final now = DateTime.now();
     return _schedules
@@ -126,7 +126,7 @@ class ScheduleProvider with ChangeNotifier {
         .toList()
       ..sort((a, b) => b.scheduledDate.compareTo(a.scheduledDate));
   }
-  
+
   void clearSchedules() {
     _schedules = [];
     _error = null;

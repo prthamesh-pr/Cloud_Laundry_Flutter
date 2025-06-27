@@ -105,18 +105,45 @@ class Schedule {
     return Schedule(
       id: json['_id']?.toString() ?? json['id']?.toString() ?? '',
       userId: json['userId']?.toString() ?? json['user_id']?.toString() ?? '',
-      serviceId: json['serviceId']?.toString() ?? json['service_id']?.toString() ?? '',
-      serviceName: json['serviceName']?.toString() ?? json['service_name']?.toString() ?? 'Unknown Service',
-      scheduledDate: DateTime.parse(json['scheduledDate'] ?? json['scheduled_date'] ?? DateTime.now().toIso8601String()),
-      timeSlot: json['timeSlot']?.toString() ?? json['time_slot']?.toString() ?? '',
-      pickupAddress: json['pickupAddress']?.toString() ?? json['pickup_address']?.toString() ?? 'Address not specified',
-      deliveryAddress: json['deliveryAddress']?.toString() ?? json['delivery_address']?.toString() ?? 'Address not specified',
+      serviceId:
+          json['serviceId']?.toString() ?? json['service_id']?.toString() ?? '',
+      serviceName:
+          json['serviceName']?.toString() ??
+          json['service_name']?.toString() ??
+          'Unknown Service',
+      scheduledDate: DateTime.parse(
+        json['scheduledDate'] ??
+            json['scheduled_date'] ??
+            DateTime.now().toIso8601String(),
+      ),
+      timeSlot:
+          json['timeSlot']?.toString() ?? json['time_slot']?.toString() ?? '',
+      pickupAddress:
+          json['pickupAddress']?.toString() ??
+          json['pickup_address']?.toString() ??
+          'Address not specified',
+      deliveryAddress:
+          json['deliveryAddress']?.toString() ??
+          json['delivery_address']?.toString() ??
+          'Address not specified',
       status: json['status']?.toString() ?? 'scheduled',
-      specialInstructions: json['specialInstructions'] ?? json['special_instructions'] ?? json['notes'],
+      specialInstructions:
+          json['specialInstructions'] ??
+          json['special_instructions'] ??
+          json['notes'],
       needsPickup: json['needsPickup'] ?? json['needs_pickup'] ?? true,
-      createdAt: DateTime.parse(json['createdAt'] ?? json['created_at'] ?? DateTime.now().toIso8601String()),
-      updatedAt: DateTime.parse(json['updatedAt'] ?? json['updated_at'] ?? DateTime.now().toIso8601String()),
-      addressId: json['addressId']?.toString() ?? json['address_id']?.toString(),
+      createdAt: DateTime.parse(
+        json['createdAt'] ??
+            json['created_at'] ??
+            DateTime.now().toIso8601String(),
+      ),
+      updatedAt: DateTime.parse(
+        json['updatedAt'] ??
+            json['updated_at'] ??
+            DateTime.now().toIso8601String(),
+      ),
+      addressId:
+          json['addressId']?.toString() ?? json['address_id']?.toString(),
     );
   }
 
@@ -135,6 +162,7 @@ class Schedule {
       'needs_pickup': needsPickup,
       'created_at': createdAt.toIso8601String(),
       'updated_at': updatedAt.toIso8601String(),
+      if (addressId != null) 'address_id': addressId,
     };
   }
 
@@ -151,6 +179,22 @@ class Schedule {
       default:
         return status;
     }
+  }
+
+  bool get isUpcoming {
+    return scheduledDate.isAfter(DateTime.now()) &&
+        (status.toLowerCase() == 'scheduled' ||
+            status.toLowerCase() == 'confirmed');
+  }
+
+  bool get canCancel {
+    return status.toLowerCase() == 'scheduled' ||
+        status.toLowerCase() == 'confirmed';
+  }
+
+  bool get isActive {
+    return status.toLowerCase() != 'cancelled' &&
+        status.toLowerCase() != 'completed';
   }
 }
 

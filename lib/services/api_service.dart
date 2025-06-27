@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/user.dart';
@@ -511,7 +510,7 @@ class ApiService {
   }
 
   // ==================== SCHEDULE METHODS ====================
-  
+
   static Future<ApiResponse<List<Schedule>>> getSchedules() async {
     try {
       final response = await http.get(
@@ -580,7 +579,8 @@ class ApiService {
   }) async {
     try {
       final body = <String, dynamic>{};
-      if (scheduledDate != null) body['scheduledDate'] = scheduledDate.toIso8601String();
+      if (scheduledDate != null)
+        body['scheduledDate'] = scheduledDate.toIso8601String();
       if (timeSlot != null) body['timeSlot'] = timeSlot;
       if (addressId != null) body['addressId'] = addressId;
       if (notes != null) body['notes'] = notes;
