@@ -39,7 +39,7 @@ A modern, scalable Flutter laundry service application with comprehensive state 
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
+   git clone <https://github.com/prthamesh-pr/Cloud_Laundry_Flutter.git>
    cd coud_laundry
    ```
 
